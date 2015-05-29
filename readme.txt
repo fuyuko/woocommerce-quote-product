@@ -32,6 +32,6 @@ located under this plugin's woocommerce folder.
 
 = 0.1 =
 *Alpha - first release
-*The quote product text in the single product page is defined in $quote_product_text  (line 15 of woocommerce-quote-product.php)
+*The quote product text in the single product page is defined at line 19 of woocommerce-quote-product.php)
 *Works with simple product only
 *Known Bug - not compatible with WooCommerce Product AddOn (The products with AddOn fields added)
