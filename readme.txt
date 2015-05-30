@@ -1,5 +1,8 @@
 === WooCommerce Quote Product ===
 Contributors: fuyuko
+Donate link: http://fuyuko.net/donation/
+Plugin URI: http://fuyuko.net/wordpress-plugins/woocommerce-quote-product/
+Author URI: http://fuyuko.net
 Tags: woocommerce, product, ecommerce, quote product
 Requires at least: 4.2.2
 Tested up to: 4.2.2
