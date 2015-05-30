@@ -4,7 +4,7 @@
     Plugin URI: https://github.com/fuyuko/woocommerce-quote-product
     Description: WooCommerce Extension Plugin - Add an option to product to be "call for quote" product, and disable online ordering 
     Author: Fuyuko Gratton 
-    Version: 0.1
+    Version: 0.2
     Author URI: http://fuyuko.net/
     */ 
 
