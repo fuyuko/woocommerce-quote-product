@@ -22,7 +22,7 @@ WooCommerce Extension Plugin - Add an option to product to be \"call for quote\"
 
 
 == Changelog ==
-= 0.2 =
+= 0.3 =
 *Beta - first release
 *Now compatible with addon products (compatible with WooCommerce Product Add-ons plugin - tested with ver. 2.7.4)
 *Bug Fix - "Select Option" button (for addon products) in product category page was functioning as "add to cart" button.
