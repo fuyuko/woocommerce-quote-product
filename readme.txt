@@ -9,7 +9,7 @@ Tested up to: 4.2.2
 License: GPLv2 or later License
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 2.3.9
-WC tested up to: 2.3.11
+WC tested up to: 2.3.13
 
 WooCommerce Extension Plugin - Add an option to product to be \"call for quote\" product, and disable online ordering.
 
@@ -22,6 +22,11 @@ WooCommerce Extension Plugin - Add an option to product to be \"call for quote\"
 
 
 == Changelog ==
+= 0.4 =
+*Beta - second release
+*Now compatible with variation products (at base product level - not at each variation level)
+*Bug Fix - showing Price even when the product is a quote product in product category page. Now it will show the quote product text instead.
+
 = 0.3 =
 *Beta - first release
 *Now compatible with addon products (compatible with WooCommerce Product Add-ons plugin - tested with ver. 2.7.4)
