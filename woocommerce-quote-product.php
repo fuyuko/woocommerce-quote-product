@@ -4,7 +4,7 @@
     Plugin URI: https://github.com/fuyuko/woocommerce-quote-product
     Description: WooCommerce Extension Plugin - Add an option to product to be "call for quote" product, and disable online ordering 
     Author: Fuyuko Gratton 
-    Version: 0.4
+    Version: 0.5
     Author URI: http://fuyuko.net/
     */ 
 
@@ -20,6 +20,7 @@ register_activation_hook( __FILE__, 'woocommerce_quote_product_activate' );
 function woocommerce_quote_product_activate(){
     //define the quote product text to display
     update_option('woocommerce_quote_product_text', 'Please Contact Us To Order This Product');
+    wp_register_style( 'quote_product_stylesheet', plugins_url('assets/stylesheet.css', __FILE__) );
 } 
 
 
@@ -133,8 +134,133 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
         update_post_meta( $post_id, 'quote_product_checkbox', $woocommerce_checkbox );
     }
     
+     /**
+     * BACKEND WOOCOMMERCE LIST PRODUCTS PAGE - make the quote product column
+     **/
+    add_filter('manage_edit-product_columns', 'quote_product_into_product_list');
+    function quote_product_into_product_list($defaults) {
+        $defaults['quote_product_checkbox'] = 'Quote Product';
+        return $defaults;
+    }
 
-    
+    /**
+     * BACKEND WOOCOMMERCE LIST PRODUCTS PAGE - fill the quote product data in each row
+     **/
+    add_action( 'manage_product_posts_custom_column' , 'quote_product_data_into_product_list', 10, 2 );
+    function quote_product_data_into_product_list($column, $post_id ){
+        switch ( $column ) {
+        case 'quote_product_checkbox':
+            echo '<span id="quote_product_' . $post_id . '">';
+            echo get_post_meta( $post_id , 'quote_product_checkbox' , true );
+            echo '</span>';
+        break;
+        }
+    }
+
+    /**
+     * BACKEND WOOCOMMERCE LIST PRODUCTS PAGE - make the quote product column sortable
+     **/
+    add_filter( "manage_edit-product_sortable_columns", "sortable_columns" );
+    function sortable_columns() {
+        return array(
+                    'quote_product_checkbox' => 'quote_product_checkbox'
+                );
+    }
+
+    /**
+     * BACKEND WOOCOMMERCE LIST PRODUCTS PAGE - define the quote product column sort order
+     **/
+    add_action( 'pre_get_posts', 'event_column_orderby' );
+    function event_column_orderby( $query ) {
+        if( ! is_admin() )
+            return;
+        $orderby = $query->get( 'orderby');
+        if( 'quote_product_checkbox' == $orderby ) {
+            $query->set('meta_key','quote_product_checkbox');
+            $query->set('orderby','meta_value');
+        }
+    }
+
+    /**
+     * BACKEND WOOCOMMERCE LIST PRODUCTS PAGE - add the quote product to quick and bulk edit
+     **/
+    add_action( 'bulk_edit_custom_box', 'add_to_bulk_quick_edit_custom_box', 10, 2 );
+    add_action( 'quick_edit_custom_box', 'add_to_bulk_quick_edit_custom_box', 10, 2 );
+    function add_to_bulk_quick_edit_custom_box( $column_name, $post_type ) {
+        switch ( $post_type ) {
+            case 'product':
+                switch( $column_name ) {
+                    case 'quote_product_checkbox': 
+                        echo '<fieldset class="inline-edit-col-center">&nbsp;';
+                        echo '</fieldset>';
+                        echo '<fieldset class="inline-edit-col-right">';
+                        echo '<div class="inline-edit-column">';
+                        echo '<label>';       
+                        echo '<input type="checkbox" name="quote_product_checkbox" id="quote_product_checkbox" value="" />';         
+                        echo '<span class="checkbox-title">Quote Product</span>';
+                        echo '</label>';
+                        echo '</div>';
+                        echo '</fieldset>';
+                        break;
+                }
+            break;
+        }
+    }
+
+    /**
+     * BACKEND WOOCOMMERCE LIST PRODUCTS PAGE - Populate Quote Product “Quick Edit” Data
+     **/
+    add_action( 'admin_print_scripts-edit.php', 'quote_product_enqueue_edit_scripts' );
+    function quote_product_enqueue_edit_scripts() {
+       wp_enqueue_script( 'quote-product-admin-edit', plugins_url( 'assets/quick-and-bulk-edit.js', __FILE__ ), array( 'jquery', 'inline-edit-post' ), '', true );
+    }
+
+    /**
+     * BACKEND WOOCOMMERCE LIST PRODUCTS PAGE - Save Quote Product “Quick Edit” Data
+     **/
+    add_action( 'save_post','quote_product_quick_save_post', 10, 2 );
+    function quote_product_quick_save_post( $post_id, $post ) {
+
+       // don't save for autosave
+       if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+          return $post_id;
+
+       // dont save for revisions
+       if ( isset( $post->post_type ) && $post->post_type == 'revision' )
+          return $post_id;
+
+       switch( $post->post_type ) {
+
+            case 'product':
+
+                if ( array_key_exists( 'quote_product_checkbox', $_POST ) ){
+                     $woocommerce_checkbox = isset( $_POST['quote_product_checkbox'] ) ? 'yes' : 'no';
+                    update_post_meta( $post_id, 'quote_product_checkbox', $woocommerce_checkbox );
+                }
+
+                break;
+        }
+
+    }
+
+    /**
+     * BACKEND WOOCOMMERCE LIST PRODUCTS PAGE - Save Quote Product “Bulk Edit” Data
+     **/
+    add_action( 'wp_ajax_quote_product_save_bulk_edit', 'quote_product_save_bulk_edit' );
+    function quote_product_save_bulk_edit() {
+       // get our variables
+       $post_ids = ( isset( $_POST[ 'post_ids' ] ) && !empty( $_POST[ 'post_ids' ] ) ) ? $_POST[ 'post_ids' ] : array();
+       $woocommerce_checkbox = ( isset( $_POST[ 'woocommerce_checkbox' ] ) && !empty( $_POST[ 'woocommerce_checkbox' ] ) ) ? $_POST[ 'woocommerce_checkbox' ] : 'no';
+   // if everything is in order
+       // if everything is in order
+       if ( !empty( $post_ids ) && is_array( $post_ids ) && !empty( $woocommerce_checkbox ) ) {
+          foreach( $post_ids as $post_id ) {
+             update_post_meta( $post_id, 'quote_product_checkbox', $woocommerce_checkbox);
+          }
+       }
+       exit;
+    }
+
     /**
     * The normal WooCommerce template loader searches the following locations in order, until a match is found:
     *  1. your theme / template path / template name

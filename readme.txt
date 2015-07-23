@@ -22,6 +22,11 @@ WooCommerce Extension Plugin - Add an option to product to be \"call for quote\"
 
 
 == Changelog ==
+= 0.5 =
+*Beta - third release
+*Now the quote product data can be updated in "quick edit" and "bulk edit"
+*Known Bug - "bulk edit" layout is not yet finalized
+
 = 0.4 =
 *Beta - second release
 *Now compatible with variation products (at base product level - not at each variation level)

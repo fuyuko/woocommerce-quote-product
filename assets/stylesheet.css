@@ -1,0 +1,7 @@
+.inline-edit-row fieldset label span.title{
+	width: 7em !important;
+}
+
+.inline-edit-row fieldset label span.input-text-wrap {
+  	margin-left: 7em !important;
+}
