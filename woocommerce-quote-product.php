@@ -4,7 +4,7 @@
     Plugin URI: https://github.com/fuyuko/woocommerce-quote-product
     Description: WooCommerce Extension Plugin - Add an option to product to be "call for quote" product, and disable online ordering 
     Author: Fuyuko Gratton 
-    Version: 0.5
+    Version: 0.5.1
     Author URI: http://fuyuko.net/
     */ 
 
@@ -191,6 +191,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
             case 'product':
                 switch( $column_name ) {
                     case 'quote_product_checkbox': 
+                        echo '<fieldset class="inline-edit-col-left">&nbsp;';
+                        echo '</fieldset>';
                         echo '<fieldset class="inline-edit-col-center">&nbsp;';
                         echo '</fieldset>';
                         echo '<fieldset class="inline-edit-col-right">';
