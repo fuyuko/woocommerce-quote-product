@@ -4,7 +4,7 @@
     Plugin URI: https://github.com/fuyuko/woocommerce-quote-product
     Description: WooCommerce Extension Plugin - Add an option to product to be "call for quote" product, and disable online ordering 
     Author: Fuyuko Gratton 
-    Version: 0.5.1
+    Version: 0.5.2
     Author URI: http://fuyuko.net/
     */ 
 
@@ -359,9 +359,10 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
         //quote product
         $quote_product =  !(strcmp( get_post_meta( $product->id, 'quote_product_checkbox', true ), "yes")) ;
         $addon_product =  !(strcmp( $product->product_type, "addons")) ;
+        $variable_product =  !(strcmp( $product->product_type, "variable")) ;
 
         //if product is purchasable, and is in stock, and not an addon product, and not a quote product then the url of the button is "add to cart" not the single product page
-        $url = (($product->is_purchasable()) && ($product->is_in_stock()) && (!$addon_product) && (!$quote_product)) ? remove_query_arg( 'added-to-cart', add_query_arg( 'add-to-cart', $product->id ) ) : get_permalink( $product->id );
+        $url = (($product->is_purchasable()) && ($product->is_in_stock()) && (!$variable_product) && (!$addon_product) && (!$quote_product)) ? remove_query_arg( 'added-to-cart', add_query_arg( 'add-to-cart', $product->id ) ) : get_permalink( $product->id );
 
         return $url;
 
