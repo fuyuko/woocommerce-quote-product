@@ -22,6 +22,10 @@ WooCommerce Extension Plugin - Add an option to product to be \"call for quote\"
 
 
 == Changelog ==
+= 0.5.2 =
+
+*Bug Fix - variation product "add to cart" in category pages produced "description is required filed" error.
+
 = 0.5.1 =
 *Bug Fix - "bulk edit" layout corrected
 
