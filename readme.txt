@@ -9,7 +9,7 @@ Tested up to: 4.2.3
 License: GPLv2 or later License
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 2.3.9
-WC tested up to: 2.3.13
+WC tested up to: 2.4.6
 
 WooCommerce Extension Plugin - Add an option to product to be \"call for quote\" product, and disable online ordering.
 
@@ -22,6 +22,10 @@ WooCommerce Extension Plugin - Add an option to product to be \"call for quote\"
 
 
 == Changelog ==
+= 0.5.3 =
+
+*Template Update - /single-product/add-to-cart/variable.php has been updated from 2.3.0 to 2.4.0 (WC 2.4.6 Compatible)
+
 = 0.5.2 =
 
 *Bug Fix - variation product "add to cart" in category pages produced "description is required filed" error.
