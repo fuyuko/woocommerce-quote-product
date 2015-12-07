@@ -5,7 +5,7 @@ Plugin URI: http://fuyuko.net/wordpress-plugins/woocommerce-quote-product/
 Author URI: http://fuyuko.net
 Tags: woocommerce, product, ecommerce, quote product
 Requires at least: 4.2.2
-Tested up to: 4.2.3
+Tested up to: 4.2.4
 License: GPLv2 or later License
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 2.3.9
@@ -22,6 +22,9 @@ WooCommerce Extension Plugin - Add an option to product to be \"call for quote\"
 
 
 == Changelog ==
+= 0.5.2 =
+*Bug Fix - variation product "add to cart" in category pages produced "description is required filed" error.
+
 = 0.5.1 =
 *Bug Fix - "bulk edit" layout corrected
 
